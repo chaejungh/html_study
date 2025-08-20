@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>keyframe으로 복잡한 애니메이션</title>
+</head>
+<style>
+    .wrap{
+        border: 1px solid;
+        background-color: #5d72bd;
+    }
+    .box{
+        border: 1px solid;
+        width: 100px;
+        height: 100px;
+    }
+    .container:hover .box{
+        box-sizing: border-box;
+        transition: all 1s ease;
+        background-color: red;
+        transform: translateX(calc(100vw - 100%));
+    }
+    .move-color>.box{/*hover 상태도 가능*/
+        animation-name:move-change-color;
+        animation-duration: 1s;
+        animation-timing-function: ease ;
+        animation-iteration-count: 3;
+    }
+    @keyframes move-change-color {
+        /*0%{}*/
+        50%{
+            transform: translateX(40vw) translateY(10vh);
+            background-color: green;
+        }
+        100%{
+            transform: translateX(100vw) translateY(0vh);
+            background-color: red;
+        }
+    }
+    .move-box{
+        animation:move-box 1s ease 3 1.5s;
+        background-color: #6f6969;
+        transform: translateX(0);
+    }
+    @keyframes move-box {
+        0%{
+            background-color: white;
+            transform: translateX(100px);
+        }
+        50%{
+            transform: translateX(50vw);
+        }
+        100%{
+            transform: translateX(100vw);
+        }
+    }
+
+</style>
+
+
+
+<body>
+    <h1>keyframe으로 복잡한 애니메이션을 만들어보자</h1>
+    <h2>transition과 keyframe 차이점</h2>
+    <p>기본상태에서 이벤트에 의해 상태가 바뀌어야 transition이 적용됨</p>
+    <div class="container">
+        <div class="box"></div>
+    </div>
+    <hr>
+    <div class="wrap move-color">
+        <div class="box"></div>
+    </div>
+    <hr>
+    <br><br><br><br>
+    <h2>animation-direction으로 동작의 방향을 정의</h2>
+    <div class="wrap">
+        <div class="box move-box"
+        style="animation-direction: normal">normal</div>
+        <div class="box move-box"
+        style="animation-direction: reverse">reverse</div>
+        <div class="box move-box"
+        style="animation-direction:alternate">alternate</div>
+        <div class="box move-box"
+        style="animation-direction: alternate-reverse">alternate-reverse</div>
+    </div>
+
+    <h2>animation fill mode로 애니메이션의 시작과 끝을 지정하기</h2>
+    <div class="wrap">
+        <div class="box move-box"></div>
+        <div class="box move-box"
+        style="animation-fill-mode: forwards">forwards</div>
+        <div class="box move-box"
+        style="animation-fill-mode: backwards">backwards</div>
+        <div class="box move-box"
+             style="animation-fill-mode: both">both</div>
+    </div>
+
+    <style>
+        .c-wrap{
+            background-color: black;
+            border: 5px solid #5d72bd;
+            display: inline-flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+        .c-box{
+            color: white;
+            height: 1.3em;
+            width: 0ch;
+            animation: blink 2s steps(12,end) 0.5s infinite alternate;
+            overflow:hidden ;
+
+        }
+        .c-blink{
+            width: 2px;
+            height: 2em;
+            background: #bdc3c7;
+            margin-left: 6px;
+            animation: cursor-blink 900ms steps(1) infinite;
+        }
+        @keyframes blink {
+            0%{
+                width: 0;
+            }
+
+            100%{width: 6ch;}
+        }
+        @keyframes cursor-blink {
+            0%,49%{
+                opacity: 1;
+            }
+            50%,100%{
+                opacity: 0;
+            }
+        }
+
+    </style>
+    <div class="c-wrap">
+        <span class="c-box">Hello, My name is</span>
+        <span class="c-blink" aria-hidden="true"></span>
+    </div>
+
+    <hr>
+
+    <style>
+        .rainbow-box{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            border: 1px solid;
+            border-radius: 20px;
+            animation: rainbow 5s linear alternate infinite;
+
+
+
+
+        }
+        @keyframes rainbow {
+            0%{
+                background-color: red;
+                transform: scale(1);
+            }
+            17%{
+                background-color: orange;
+                transform: scale(1.1);
+            }
+            34%{
+                background-color: yellow;
+                transform: scale(1);
+            }
+            51%{
+                background-color: green;
+                transform: scale(1.1);
+            }
+            68%{
+                background-color: blue;
+                transform: scale(1);
+            }
+            85%{
+                background-color: darkblue;
+                transform: scale(1.1);
+            }
+            100%{
+                background-color: purple;
+                transform: scale(1);
+            }
+        }
+    </style>
+    <h3>과제1 무지개색 변환 박스</h3>
+    <div>
+        <div class="rainbow-box"></div>
+    </div>
+    <h2>타자기 효과</h2>
+    <style>
+        .typed{
+            color: #fff;
+            padding: .2em .5em;
+            font-size: 2em;
+            border: 1px solid #3b3939;
+            border-right-width: .5em ;
+            background-color: #262629;
+            width: 0ch;
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 5s steps(13,end) infinite alternate;
+        }
+        .spot{
+            width: .2em;
+            height: 2.3em;
+            background-color: #fff;
+            display: inline-block;
+            position: relative;
+            top:-0.8em;
+            left:-1.5ch;
+            animation: cursor-blink .3s steps(2) alternate infinite;
+        }
+
+        @keyframes typing {
+            to{
+                width: 13ch;
+            }
+        }
+
+    </style>
+    <div class="bll">
+        <span class="typed">
+            Hello css animation
+        </span>
+        <span class="spot"></span>
+
+    </div>
+    <h3>로딩 애니메이션</h3>
+    <style>
+        .loading-dots>span{
+            width: 1em;
+            height: 1em;
+            display: inline-block;
+            background-color: darkgray;
+            border-radius: 50%;
+            animation: move-dot .5s infinite linear alternate;
+        }
+        .loading-dots>span:nth-child(2){
+            animation-delay: .1s;
+        }
+        .loading-dots>span:nth-child(3){
+            animation-delay: .2s;
+        }
+        @keyframes move-dot {
+            0%{
+                transform: translateY(0);
+            }
+            100%{
+                transform: translateY(-1em);
+                background-color: black;
+            }
+
+        }
+    </style>
+    <div class="loading-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <h3>스트라이프 느낌의 배경</h3>
+    <style>
+        body{
+            margin: 0;
+            padding:0;
+        }
+        .gradient-wrap{
+            background-image: linear-gradient(to right, red 0% 20%, orange 20% 40%,green 40% 60%, blue 60% 80%, purple 80% 100%);
+            height: 5em;
+            background-size: 100vw;
+            /*background-position-x: 20vw;*/
+            background-repeat: no-repeat;
+            width: 25vw;
+            overflow: hidden;
+            margin: 0 auto;
+            animation: back-move 1s infinite steps(6) alternate;
+        }
+        @keyframes back-move{
+            to{
+                background-position-x: -80vw;
+            }
+        }
+    </style>
+    <div class="gradient-wrap">
+
+    </div>
+
+
+
+
+    <br><br><br><br><br>
+
+
+
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

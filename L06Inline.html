@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>컨텐츠인 인라인 요소</title>
+</head>
+<style>
+    .red{
+        /*display: inline;*/
+        /*
+        너비 높이를 지정할수없다. (컨텐츠 자체가 너비 높이,box model에 포함되지 않음)
+        마진의 좌우만 적용 가능(마진 위 아래는 line-height와 충돌하기 때문에 적용 안됨)
+        padding border
+        */
+        color: #FF6464;
+        width: 50px;
+        height: 50px;
+        margin: 5px;
+
+        padding: 5px;
+        border: 1px solid red;
+        border-radius: 10px;
+        background-color: #3498db;
+    }
+    .link{
+        text-decoration: none;
+    }
+    .dog{
+        width: 200px;
+        height: 40px;
+        object-fit: cover;
+        /* 이미지를 너비 높이에 맞게 병형하지 않음    */
+        border: 1px #3498db solid;
+        padding: 10px;
+        margin : 10px;
+    }
+</style>
+<body>
+    <h1>컨텐츠(text)를 정의하는 인라인 요소</h1>
+    <ul>
+        <li>
+            span<span class="red">스팬태그</span> : 문자를 분리(스타일이 없음)
+        </li>
+        <li>
+            <a class="link" href="https://naver.com">네이버</a>
+            a(hypertext): 방문한 기록이 있으면 보라,
+            없으면 파랑,기본이 밑줄
+        </li>
+        <li>
+            <b>굵게</b> b: 텍스트를 더 굵게 표시
+        </li>
+        <li>
+            <strong>굵게+강조(semantic)</strong>
+        </li>
+        <li>
+            <i>기울게</i>
+        </li>
+        <li>
+            <em>기울게+강조(semantic)</em>
+        </li>
+        <li>
+            <mark>형광마크</mark>
+        </li>
+        <li>
+            <big>크게</big>
+        </li>
+        <li>
+            <small>작게</small>
+        </li>
+        <li>
+            안녕
+            <sup>위</sup>
+            <sub>아래</sub>
+            2<sup> 2</sup>
+        </li>
+        <li>
+            <address>주소+semantic</address>
+        </li>
+        <li>
+            <code>System.out.println("hi")</code>
+            프로그램 코드 작성(번역 x)
+        </li>
+        <li>
+            <pre>
+                hi
+                hello
+                pre는 공백과 라인개행을 출력
+            </pre>
+        </li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <h2>인라인인데 블럭(box model)요소(display:inline-block)</h2>
+    <ul>
+        <li>
+            <img class="dog" src="silseub/src/img/강아지.webp" width="50">
+        </li>
+        <li>
+            <input type="text">
+            <input type="checkbox" name="" id="">
+            <input type="range" name="" id="">
+            <input type="button">
+            <select><option>1</option></select>
+        </li>
+        <li>
+            <textarea name="" id="" cols="30" rows="10"></textarea>
+        </li>
+        <li></li>
+        <li></li>
+    </ul>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</body>
+</html>

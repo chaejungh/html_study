@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Position</title>
+</head>
+<style>
+    .box{
+        width: 5rem;
+        height: 5rem;
+        display: inline-block;
+        border: 1px solid hsl(200, 100%, 50%);
+        background-color: hsl(10, 70%, 90%);
+        position: static;
+    }
+
+</style>
+<body>
+    <h1>Position 으로 요소의 위치를 조정 </h1>
+    <h2>Position : relative 일반적(static)으로 배치된 위치를 기준으로 이동</h2>
+
+    <div
+            style="background-color: #c2f9d9;
+            height: 4rem;
+            position:sticky;
+            top: 1em;
+            z-index: 999;
+
+
+"
+
+    > sticky 블럭</div>
+
+
+
+    <div>
+        <div class="box" style="position: relative;top: 1em;left: 1em"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box" style="position:relative;bottom: 1em;right: 1em;z-index: -1"></div>
+    </div>
+    <h2> Position : absolute(절대적인, 독립적인)</h2>
+    <div>
+        <div class="box"></div>
+        <div class="box" style="position: absolute;top:0;left:0">
+            absolute box <br>
+            top:0,left:0 <br>
+        </div>
+        <div class="box" style="position: absolute;bottom:0;right:0">
+            absolute;bottom:0;right:0
+        </div>
+        <div class="box"></div>
+    </div>
+
+    <h2>absolute의 위치의 기준을 부모의 relative로 변경</h2>
+
+    <div style="position:relative">
+        <div class="box"></div>
+        <div class="box" style="position:absolute;top:-1em;left: 1em">
+            absolute box <br>
+        </div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+
+    <h2>fixed: view fort의 특정 위치에 고정</h2>
+
+    <div style="background-color: #FF6464; position:fixed;top:0;width: 100%">
+        막대
+    </div>
+
+    <h2>
+        sticky(끈적) :
+        스크롤을 할때 특정 위치에 도달하면 요소가 fixed처럼 고정
+    </h2>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

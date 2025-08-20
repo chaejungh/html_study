@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>background 속성으로 배경을 지정하자</title>
+</head>
+<style>
+    .container{
+        min-height: 20em;
+    }
+</style>
+<body>
+    <h1>background 속성으로 배경을 지정하자</h1>
+    <h2>background-color</h2>
+    <div class="container" style="background-color: red">
+
+    </div>
+    <h2>배경이미지 background-image</h2>
+    <div class="container" style="background-image: url('/silseub/src/img/iphone-background.jpg');
+            background-size: 5em 5em; background-repeat: repeat;
+    "></div>
+    <h2>배경 이미지 정렬 및 반복</h2>
+    <h2>cover</h2>
+    <div class="container"
+         style="background-image: url('/silseub/src/img/iphone-background.jpg');
+        background-size: cover;">
+        hi
+    </div>
+
+    <h2>contain</h2>
+    <div class="container"
+         style="background-image: url('/silseub/src/img/iphone-background.jpg');
+        background-size: contain;background-repeat: no-repeat;">
+        hi
+    </div>
+
+    <div class="container"
+         style="
+        border: 1px solid black;
+        height: 20em;
+        background-image: url('/silseub/src/img/iphone-background.jpg');
+        background-size: 10em 10em;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;">
+        hi
+    </div>
+
+    <h2>배경의 그라데이션 gradient</h2>
+    <h3>선형 그라데이션 linear-gradient</h3>
+    <div class="container"
+         style="background: linear-gradient(to right, blue, red)"
+    ></div>
+
+    <h2>그라디언트 색의 크기 지정</h2>
+    <div class="container"
+         style="background: linear-gradient(45deg, purple,blue 10% 40%, red 50% 70%,orange, green)"
+    ></div>
+    <div class="container"
+         style="background: linear-gradient(45deg,white 0% 40%,red 43% 48%,blue 52% 57%,white 60% 100%)"
+    ></div>
+
+
+
+    <h3>그라디언트size: 사진처럼 취급</h3>
+    <div class="container"
+         style="
+         background-size: 5em 5em;
+         background-image: /*url('silseub/src/img/apple logo.png');*/ linear-gradient(45deg,white 0% 40%,red 43% 48%,blue 52% 57%,white 60% 100%);"
+    ></div>
+
+    <h2>원형 그라디언트 radial-gradient</h2>
+    <div class="container"
+         style="background: radial-gradient(at 0% 50% ,blue, red , green, purple)"
+    ></div>
+    <div class="container"
+         style="background: radial-gradient(blue 0% 10% , red 10% 20%, green 20% 30%, purple 30% 100%)"
+    ></div>
+    <div class="container"
+         style="background: conic-gradient(blue, red , green, purple,blue)"
+    ></div>
+    <div class="container"
+         style="background: conic-gradient(blue 0% 10% , red 10% 20%, green 20% 25%, white 25% 100%)"
+    ></div>
+    <div class="container"
+         style="background: conic-gradient(blue 0deg 10deg , red 10deg 20deg, green 20deg 25deg, white 25deg 100%)"
+    ></div>
+    <div class="container"
+         style="background: repeating-conic-gradient(blue 0deg 10deg , red 10deg 20deg, green 20deg 30deg, white 30deg 40deg)"
+    ></div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

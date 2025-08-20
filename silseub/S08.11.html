@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>08-11</title>
+
+
+
+
+</head>
+<style>
+    body{
+        background-image: url("src/img/BackPic.jpg");
+        background-size: cover;
+
+    }
+    .gallery-container{
+        margin: 0 auto;
+        text-align: center;
+        width: 100%;
+        height: 80vh;
+        display: flex;
+        align-items: center;
+    }
+    .gallery-container>.gallery-box{
+        width: 80em;
+        height: 35vh;
+        display: flex;
+        align-items: center;
+        overflow: auto;
+        /*justify-content: space-evenly;*/
+    }
+    .gallery-container>.gallery-box>.img{
+        display: flex;
+        width: 20em;
+        height: 13em;
+        box-sizing: border-box;
+        object-fit: cover;
+
+
+    }
+
+</style>
+
+
+<body>
+    <h1 style="text-align: center">이미지 갤러리 만들기</h1>
+
+    <div class="gallery-container">
+        <div class="gallery-box">
+            <img class="img" src="src/img/Rome.jfif" title="Rome">
+            <img class="img" src="src/img/Praha.jfif" title="Praha">
+            <img class="img" src="src/img/London.jfif" title="London">
+            <img class="img" src="src/img/Seoul.jpg" title="Seoul">
+            <img class="img" src="src/img/Tokyo.avif" title="Tokyo">
+            <img class="img" src="src/img/Paris.jfif" title="Paris">
+            <img class="img" src="src/img/Madrid.jpg" title="Madrid">
+            <img class="img" src="src/img/Berlin.jpg" title="Berlin">
+        </div>
+    </div>
+</body>
+</html>

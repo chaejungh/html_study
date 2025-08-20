@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Box Model</title>
+</head>
+<style>
+    div.box{
+        background-color: #FF0000;
+        /*height: auto; 컨텐츠의 높이로 블럭이 늘어남(브라우저가 스크롤로 ui를 제공)*/
+        /*width: 100%; 브라우저 너비 기준*/
+    }
+    .square{
+        /*width;height: 는 컨텐츠의 크기*/
+        box-sizing: border-box;
+        width: 150px;
+        height: 150px;
+        /*overflow: visible; 컨텐츠가 블럭의 밖으로 표시(높이고정 시)*/
+        /*overflow: hidden;*/
+        overflow: scroll; /* 컨텐츠를 스크롤로 표시    */
+
+        /*border-width: 5px;*/
+        /*border-style: solid;*/
+        /*border-color: #0000ff;*/
+        /*단축표기법*/
+        border: 5px #00ff00 dashed;
+        border-width: 5px 7px 9px 11px;
+    }
+</style>
+<body>
+    <h1>블럭의 박스 모델을 확인하자</h1>
+
+    <div>
+        <div class="box">
+        ㅁㅁㅁㅁ
+            ㅁㄴㅇㅁㄴㅇ
+        </div>
+    </div>
+    <hr>
+    <div>
+        <div class="box square">
+        나는 컨텐츠입니다나는 컨텐츠입니다나는 컨텐츠입니다나는 컨텐츠입니다
+        </div>
+    </div>
+    <hr>
+    <ul>
+        <li>display:block 요소의 기본 너비는 브라우저 너비, 컨텐츠가 높이를 결정 </li>
+        <li>html컨텐츠는 라인개행을 무시</li>
+        <li>display:block 의 높이를 지정하면 고정크기로 바뀐다. 컨텐츠가ㅏ 밖으로 나오게 된다(overflow: visible)</li>
+        <li>overflow 컨텐츠가 블럭을 나왔을 때 어떻게 보일지를 결정(visible, hidden, scroll)</li>
+        <li>block 은 박스모델의 contents, padding, border, margin을 갖는다</li>
+        <li>박스모델의 contents의 기본값은 border를 포함하지 않는다(너비 높이는 컨텐츠의 크기를 지정)</li>
+        <li>box sizing은 대부분의 사람들이 border까지 컨텐츠의 영역으로 인식해도 등장.</li>
+    </ul>
+    <h2>방향 단축</h2>
+    <ul>
+        <li>padding: A; → 모든 방향 A</li>
+        <li>padding: A B; → 위아래 A, 좌우 B</li>
+        <li>padding: A B C; → 위 A, 좌우 B, 아래 C</li>
+        <li>padding: A B C D; → 위 A, 오른쪽 B, 아래 C, 왼쪽 D (시계방향)</li>
+    </ul>
+</body>
+</html>
