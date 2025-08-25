@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>리소스 참조를 배워보자</title>
+<!--    외부인데ㅐ 바뀔수 있는 css 참조 위치-->
+    <link rel="stylesheet" href="/silseub/src/bootstrap-5.3.7/dist/css/bootstrap.css">
+<!--    외부 css룰 참조하는 위치-->
+    <link rel="stylesheet" href="/silseub/src/css/background.css">
+<!--    내부 css 위치   직접적(인라인)>내부>외부-->
+</head>
+<body>
+    <h1>리소스 참조를 배워보자</h1>
+    <p>http://localhost:63342/html_study/L26Resourse.html</p>
+    <ul>
+        <li>http : 통신규약</li>
+        <li>http://localhost:63342/html_study/L26Resourse.html</li>
+        <li>localhost : 내 컴퓨터 내부(== 127.0.0.1)</li>
+        <li>html_study/L26Resourse.html : 서버내의 리소스 주소(path)</li>
+        <li>http://localhost:63342/html_study/L26Resourse.html : url</li>
+    </ul>
+    <p>
+        <img src="/silseub/src/img/BackPic.jpg" width="50px">
+    </p>
+    <h2>상대 경로</h2>
+    <ul>
+        <li>/path : 루트 경로 => 리소스의 맨상단</li>
+        <li></li>
+        <li></li>
+    </ul>
+    <h2>다른문서 (html)을 포함하는 iframe</h2>
+    <h3>루트 상대 경로</h3>
+    <iframe src="/L01Hello.html" frameborder="1"></iframe>
+    <hr>
+    <h3> ./  .   ../ : 리소스 위치 기준 상대경로</h3>
+    <iframe src="./L01Hello.html" frameborder="1"></iframe>
+    <h3>절대경로 : 통신규약 or 드라이버</h3>
+    <iframe src="http:localhost:63342/html_study" frameborder="0"></iframe>
+
+    <h3>절대경로로 다른 사아트 참조</h3>
+    <p>CORP Cross Origin Resource Policy => SOP (Same Origin Policy): 같은 서버의 리소스만 참조가능 </p>
+    <iframe src="https://naver.com" frameborder="0"></iframe>
+    <hr>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/FmQfOoQ-Q4U?si=QWi9z9G9wUUakWto" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</body>
+</html>
