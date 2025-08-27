@@ -6,12 +6,17 @@
     <title>회원가입 | Bootstrap Responsive</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background: #f7f8fa; }
+        body { background: #f7f8fa;
+                transition: background-color 0.5s ease;
+        }
         .card { box-shadow: 0 10px 30px rgba(0,0,0,.06); }
         .brand { font-weight: 700; letter-spacing: .2px; }
         .strength-label { font-size: .875rem; }
         .visually-hidden-focusable:focus { clip: auto; width: auto; height: auto; }
         .toast-container { z-index: 1080; }
+
+
+
     </style>
 </head>
 <body>
@@ -51,6 +56,43 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="container-sm">100% wide until small breakpoint</div>
+<div class="container-md">100% wide until medium breakpoint</div>
+<div class="container-lg">100% wide until large breakpoint</div>
+<div class="container-xl">100% wide until extra large breakpoint</div>
+<div class="container-xxl">100% wide until extra extra large breakpoint</div>
+
+
+<div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Email address</label>
+    <input type="email" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder="name@example.com">
+</div>
+<div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+    <textarea class="form-control-plaintext " readonly placeholder="I'm Text" id="exampleFormControlTextarea1" rows="3"></textarea>
+</div>
+
+<div class="mb-3">
+    <label for="formFile">File select</label>
+    <input type="file" id="formFile" class="form-control">
+</div>
+<div class="mb-3">
+
+</div>
+<label for="exampleColorControlInput1">Color Picker</label>
+<input type="color" class="form-control form-control-color" id="exampleColorControlInput1" value="#fe4444">
+
+<script>
+    const colorPicker = document.getElementById("exampleColorControlInput1");
+    colorPicker.addEventListener("input",()=>{
+        document.body.style.backgroundColor = colorPicker.value;
+    })
+</script>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
