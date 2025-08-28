@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>실수 데이터가 저장되는 방식</title>
+</head>
+<body>
+    <h1>실수 데이터가 저장되는 방식</h1>
+    <script>
+        let a = 10;
+        //10=>2진수로 변환 후 저장
+        //2**3 + 2**1
+        //1010(2)
+        //-10
+        a=-10;
+        console.log(a,a.toString(2))
+
+
+        //기본형을 변수가 참조하고 있다가 랩퍼클래스의 함수를 참조하면
+        //자동으로 자료형으로 형변환
+        // console.log(10.toString)
+        //Number : 기본형을 지원하는 자료형 데이터
+        console.log(Number(10).toString(2));//10이라는 데이터를 2진수로 보고싶어
+        console.log(Number(10).toString(16));//10이라는 데이터를 16진수로 보고싶어
+        a = 10.0;
+        //10.0 => 2진수로 변환 후
+        //지수표기법으로 변환 후 지수부와 가수부로 저장
+        //java : float 4 , double 8
+        //js : number 8 (java.double)
+        // 0 1bit 00..11bit.00 000...52bit...000
+        // 0 0bit 00..11bit.00 000...52bit...000
+        //실수는 0,-0이 존재한다
+        // 10.0 => 1010
+        // 10.0 => 1010 => 1.01*2**3
+        // 00000...1010
+
+        // 0 00000011 010
+
+        //소수점을 2진수로 변환
+        a=0.1;
+        console.log(a,a.toString(2));
+
+        a=0.5;
+        console.log(a,a.toString(2));
+
+        a=0.25;
+        console.log(a,a.toString(2));
+        a=0.125;
+        console.log(a,a.toString(2));
+        a=0.9;
+        console.log(a,a.toString(2));
+    </script>
+</body>
+</html>

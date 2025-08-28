@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>문자열 데이터</title>
+</head>
+<body>
+    <h1>문자열 데이터</h1>
+    <p id="userName"></p>
+    <script>
+        let str="Hi";
+        console.log(str);
+        str='bye';
+        console.log(str);
+        str=`js`;
+        console.log(str);
+
+        // str="H
+        //     bye";
+        str=`hi
+               chae `;
+        console.log(str);
+        let name="지형"
+        str= ` <b>
+                ${name}
+                </b>`;
+        userName.innerHTML=str;
+        console.log("name:",name)
+        console.log("name.length :",name.length)
+        console.log("name[0]",name[0])
+        console.log("name[1]",name[1])
+        //문자열은 순서와 길이가 있는 데이터
+
+        //문자열의 자동형변환
+        //+ 수학적 더하기 연산
+        //+ 문자열 더하기 연산(concat) : 숫자가 문자열로 형변환
+        console.log("1+1:",1+1)
+        console.log("1+'1':",1+'1')
+        console.log("1+'1':",'1'+'1')
+        console.log(11*11)
+        //+를 제외한 수학적연산은 모두 수로 자동형변환
+        console.log("11"*"11")
+        console.log("11"/"11")
+        console.log("11"%"11")
+        console.log("11"**"11")
+        let a="11";
+        console.log(++a)
+        a="11";
+        console.log(--a)
+
+        //비교연산!!
+
+        console.log(11==11)//true
+        console.log(11=="11")
+        console.log(11>"10")
+        console.log(11<"20")
+        //문자열끼리 비교연산 => 수로 형변환( == 제외 )
+        console.log("11">"20")
+        //동등비교는 크기를 비교하는 것이 아니기 때문에 수로 형변환 x
+        console.log("11"=="20")
+
+
+        //수로 형변환 되지 않는 문자열간의 크기 비교(양면이 문자열)
+        console.log("a"<"b")
+        console.log("azzz"<"bzzz")
+        //문자열에서 맨앞의 문자의 인코딩 번호를 비교
+        console.log(97<98)
+
+        //하나는 수이고 하나는 문자열인데 수로 형변환되지 않는것
+        console.log(11<"20")//11<20
+        console.log(11<"Hi")//11<Number("Hi")
+        //NaN는 무엇과 비교해도 false 심지어 NaN조차도
+        console.log(NaN<0)
+        console.log(NaN==NaN)
+
+        // Number.isNaN(NaN): 문자열을 형변환 후 NaN지 확인
+        // isNaN(NaN이 될 문자열): 문자열이 NaN이 될 상인지 확인
+        console.log(isNaN("Hi"))
+        console.log(isNaN("11"))
+
+        console.log(Number.isNaN("Hi"));
+        console.log(Number.isNaN(+"Hi"));//+를 통해 이미 NaN으로 만드니 true
+        console.log(Number.isNaN(NaN));
+
+        //문자열을 수로 형변환 하는 함수
+        //Number
+        a="12.3" //parsing : 강제 형변환
+        console.log("Number(a): "+Number(a))
+        console.log("Number.parseInt(a): "+Number.parseInt(a))
+        console.log("Number.parseFloat(a): "+Number.parseFloat(a))
+        // console.log(a.parseInt())
+        // Math.trunc(12.3)
+        //Number.parseInt("12.3")=>12
+
+        a="a12.3"
+        console.log(Number(a))
+        console.log(Number.parseInt(a))
+        console.log(Number.parseFloat(a))
+
+        a="12.3rem"
+        console.log(Number(a))
+        console.log(Number.parseInt(a))
+        console.log(Number.parseFloat(a))
+    </script>
+    <p>
+        <label for="userAge"></label>
+        <input type="text" id="userAge" value="10">
+    </p>
+    <p>유저는 <b id="agePrint"> </b>입니다. </p>
+    <script>
+        //input 입력하고 밖으로 빠져나옴 => blur
+        //input 입력 => input
+        //input 바뀌어서 + blur => change
+        userAge.onchange = function (){
+            if (isNaN(userAge.value)){
+                alert("다시 입력하시오")
+                return;
+            }
+            console.log(Math.trunc((userAge.value)/10));
+            let a=Math.trunc((userAge.value)/10);
+            agePrint.textContent=a*10+"대";
+        }
+
+    </script>
+</body>
+</html>
