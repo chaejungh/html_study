@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Object의 타입 생성</title>
+</head>
+<body>
+    <h1>Object의 타입 생성(사용자 정의 설계)</h1>
+
+    <script>
+        let obj = {};
+        obj=new Object();
+        //객체의 타입 Object
+        //타입 : 객체의 설계도
+        console.log(obj)//[[Prototype]]:Object
+        //객체지향언어(자바) : 객체 생성시 타입(class)을 기반으로 생성
+
+        //js는 프로토타입(미리 만들어놓는것)
+        //프로토타입 언어 : 객체를 프로토타입(시제품)으로 미리 만들어놓고 참조해서 사용
+
+        //핸드폰 vs 프로토타입 핸드폰(시제품: 기능이 제외된)
+        let user={name:"",age:39};
+        let user2={name:"",age:39};
+        let user3={name:"",age:39};
+        let user4={name:"",age:39};
+        // user를 만들건데 모든 유저는 이름,나이가 있을때
+        //매번 새롭게 정의하는 것은 타입이 없기때문
+        //타입 : 생성을 재사용
+
+        //이름 파스칼+this : 타입
+        function User(n,a){
+            this.name=n;
+            this.age=a;
+            //return X
+            //타입
+            //이름 낙타표기법+return :함수
+
+        }
+        function a(i,i2){
+            // this를 절대 사용하지 않음
+            // return
+            return i2+i;
+        }
+
+
+
+
+        console.log(User) //정의한 타입 생성자함수
+        console.log(a)
+        console.log(User.prototype)
+        user = new User("정호",23);
+        console.log(user)
+        console.log(new User("채현",24))
+
+        //많은 개발자는 객체지향언어에 익숙
+        //함수가 => type (이상한 언어)
+        //js=class 문법 도입(문법적 설탕)
+
+        class Customer{
+            name="";num=0;phone="010-1234-7229";//생략가능
+            // let a;
+            // this.b;
+            constructor(a,b,c){
+                this.name=a;
+                this.num=b;
+                this.phone=c;
+                this.isMarried=false; //없는 필드 호출시 생성
+                // js는 전역에 필드를 정의하지않고 생성자로정의
+            }
+
+        }
+
+        console.log(new Customer())
+        console.log(new Customer("정호",10,"010-12323-12321"))
+        console.log(Customer)
+        console.log(Customer.prototype)
+
+        const cjh=new Customer("정호",23,"010-9206-7229");
+        const hch=new Customer("정호2",24,"010-2400-0929");
+        hch.a=10;
+        console.log(Object.keys(cjh))
+        //Object.keys(obj):['name', 'num', 'phone', 'isMarried']
+        //객체의 키 목록을 배열로 반환
+
+        console.log(Object.values(cjh))
+        //Object.values(obj) :['정호', 23, '010-9206-7229', false]
+        // 객체의 값 목록을 배열로 반환
+
+        console.log(Object.entries(cjh))
+        //Object.entries(obj) : [Array(2), Array(2), Array(2), Array(2)]
+        // 키-값 쌍을 배열 형태로 반환
+
+        console.log(Object.assign(cjh,hch))//객체 복사 또는 합치기: 많이 쓰지는 않음
+        console.log(cjh)
+        console.log(hch)//cjh,hch 둘다 같은 필드값으로 합쳐짐
+        console.log(cjh===hch)//그렇지만 같아지진않는다.
+
+        Object.freeze(cjh)//Object.freeze(obj):
+        cjh.name="정호호"
+        console.log(cjh)//cjh.name//"정호"
+
+        Object.seal(cjh)
+        console.log(cjh)
+        cjh.b="11"
+        console.log(cjh)//Object.seal(cjh): 프로퍼티 추가/삭제 불가, 기존 값 수정은 가능
+
+        console.log(Object.create(cjh))
+        console.log(Object.hasOwn(cjh,name))
+
+    </script>
+
+</body>
+</html>
