@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>화살표 함수와 this 캡쳐</title>
+</head>
+<body>
+    <h1>화살표 함수와 this 캡쳐</h1>
+    <p>function 함수는 함수를 실행하는 객체가 this</p>
+    <p>()=>{} 함수는 함수가 선언된 type의 this가 this(==자바)</p>
+    <script>
+        //생성자함수, class
+        function User(name, age){
+            this.name = name;
+            this.age = age;
+            this.info=function (){
+                console.log(`나는 ${this.name}이다.info`)
+            }
+            this.arrowInfo=()=>{
+                console.log(`나는 ${this.name}이다.arrowInfo`)
+            }
+        }
+        const user = new User("정호",23);
+        console.log(user);
+        user.info();
+        user.arrowInfo();
+        let userInfo = user.info;
+        userInfo();
+        let arrowUserInfo = user.arrowInfo
+        arrowUserInfo();
+        //화살표함수는 처음 위치에 지정한 this를 바꾸지않음.
+
+
+
+        //화살표함수에서 this를 참조할떄는 꼭 타입안에서 명시
+
+        let sum=()=>{
+            console.log(this.a+this.b)
+            //tjis로 처음 캡쳐한 객체(부모영역의 타입)로 불변
+        }
+        sum();
+        let obj={a:10,b:20,sum:sum}
+        obj.sum();
+
+        function Calc(a,b){
+            this.a=a;
+            this.b=b;
+            this.sum= function (){
+                setTimeout(function (){
+                    console.log(this.a+this.b,"function");
+                }.bind(this),1000)
+            }
+            this.arrowSum=function(){
+                setTimeout(()=>{
+                    console.log(this.a+this.b,"()=>{}");
+                },1000)
+            }
+        }
+        const calc = new Calc(10,20);
+        calc.sum()
+        calc.arrowSum();
+        calc.arrowSum();
+
+        class Customer{
+            constructor(name) {
+                this.name = name;
+            }
+            call(){
+                setTimeout(function (){
+                    console.log(`나는 ${this.name}이다 function`)
+                }.bind(this),1000);
+            }
+            callArrow=function (){
+                setTimeout(()=>{
+                    console.log(`나는 ${this.name}이다 arrow`)
+                },2000)
+            }
+        }
+        const customer = new Customer("정호")
+        console.log(customer);
+        customer.call();
+        customer.callArrow();
+
+    </script>
+</body>
+</html>
