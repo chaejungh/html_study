@@ -4,11 +4,27 @@
     <meta charset="UTF-8">
     <title>프로토타입에 대한 이해와 상속</title>
     <link rel="stylesheet" href="/silseub/src/css/study.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <link href="/silseub/src/bootstrap-5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="/silseub/src/bootstrap-5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 
 
 </head>
+<script>
+
+    class A {}
+
+    class B extends A {}
+
+    const b = new B();
+
+    console.log(b.__proto__ === B.prototype);
+    console.log(b.__proto__.__proto__); //A.prototype
+
+
+    console.log(B.prototype.__proto__ === A.prototype);
+
+
+</script>
 <body>
 <h1>프로토타입에 대한 이해와 상속</h1>
 <section>
@@ -102,30 +118,6 @@ console.log(Dog.prototype.__proto__ === Animal.prototype); // true
   </pre>
 </section>
 
-<section>
-    <h2>프로토타입을 다루는 표준 메서드</h2>
-    <ul>
-        <li><code>__proto__</code>는 이해용으로만 쓰고, 표준 메서드를 사용하는 것이 권장된다.</li>
-        <li><code>Object.create(proto)</code>: 지정한 객체를 프로토타입으로 하는 새 객체 생성</li>
-        <li><code>Object.getPrototypeOf(obj)</code>: 객체의 프로토타입 반환</li>
-        <li><code>Object.setPrototypeOf(obj, proto)</code>: 객체의 프로토타입 변경</li>
-    </ul>
-    <pre>
-const animal = { eats: true };
-
-// create: animal을 프로토타입으로 하는 rabbit 생성
-const rabbit = Object.create(animal);
-console.log(rabbit.eats); // true
-
-// getPrototypeOf
-console.log(Object.getPrototypeOf(rabbit) === animal); // true
-
-// setPrototypeOf
-const dog = {};
-Object.setPrototypeOf(dog, animal);
-console.log(dog.eats); // true
-  </pre>
-</section>
 <section>
     <h2>프로토타입을 다루는 표준 메서드</h2>
     <ul>
