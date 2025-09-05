@@ -28,7 +28,7 @@
     <h2>DOM 탐색 함수 정리</h2>
     <ul>
         <li><code>getElementById(id)</code>: 단일 요소 반환</li>
-        <li><code>getElementsBy*([class,name,tage])</code> : 클래스명, 태그이름, name 명으로 요소를 찾음. 복수의 배열(HTMLCollection) 요소 반환
+        <li><code>getElementsBy*([class,name,tag])</code> : 클래스명, 태그이름, name 명으로 요소를 찾음. 복수의 배열(HTMLCollection) 요소 반환
             <ul>
                 <li><code>getElementsByClassName(class)</code> : 클래스 이름으로 복수의 요소 찾기 </li>
                 <li><code>getElementsByTagName(tag)</code> :  요소 이름으로 복수의 요소 찾기</li>
@@ -777,6 +777,16 @@ console.log(box.classList.contains("active"));
         a20.querySelector("#aGallery header .title").textContent = "사진 모음";
     </script>
 </section>
+
+
+<script>
+    document.getElementById("tabs").children[1].classList.add("selected")
+    const a = document.getElementsByClassName("edit")
+    console.log(a)
+    console.log(a[0].closest(".card-title"))
+
+
+</script>
 
 </body>
 </html>
