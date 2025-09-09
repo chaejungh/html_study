@@ -418,34 +418,59 @@ console.log(box.classList.contains("active"));
     <div id="box">
         <h4 class="title">공지</h4>
         <h4>일반</h4>
+        <h4>일반</h4>
+        <h4>일반</h4>
+        <h4 class="title">공지</h4>
+        <h4>일반</h4>
     </div>
 </section>
 
 <script>
     let box = document.querySelector("#q7 #box")
-    console.log(box.firstElementChild.matches(".title"));
-    if (box.firstElementChild.matches(".title")){
-        box.firstElementChild.classList.add("highlight");
+    console.log(box.firstElementChild.matches("title"));
+    for (let h4 of box.children) {
+        if (h4.classList.contains("title")) {
+            h4.classList.add("highlight");
+        }
     }
 </script>
 
 <section id="q8">
     <h3>문제 8. classList 토글</h3>
     <p class="task">지시: 아래 <code>#notice</code> 내부 <code>.desc</code>의 클래스 <strong>on</strong>을 토글하라.</p>
+    <p>
+        <button id="onToggleBtn">on toggle</button>
+    </p>
     <div id="notice">
         <p class="desc on">보이는 설명</p>
+        <p class="desc ">보이는 설명</p>
+        <p class="desc ">보이는 설명</p>
+        <p class="desc ">보이는 설명</p>
+        <p class="desc ">보이는 설명</p>
+        <p class="desc ">보이는 설명</p>
+        <p class="desc ">보이는 설명</p>
     </div>
 </section>
 
 <script>
-    let descToggle = document.querySelector("#notice .desc");
-    const onHandler = function () {
-        descToggle.classList.toggle("on")
-        if (descToggle.classList.contains("on")){
-            console.log("토글됨")
+    const descToggle = document.querySelector("#notice .desc");
+    const descList = descToggle.querySelectorAll(".desc");
+    const onToggleBtn = document.querySelector("#onToggleBtn");
+    const onToggleHandler=()=>{
+        for (let desc of descList) {
+            desc.classList.toggle("on");
         }
     }
-    descToggle.addEventListener("click", onHandler);
+    // onToggleBtn.onclick=onToggleHandler;/// 직접정의
+    onToggleBtn.addEventListener("click", onToggleHandler);
+
+    // const onHandler = function () {
+    //     descToggle.classList.toggle("on")
+    //     if (descToggle.classList.contains("on")){
+    //         console.log("토글됨")
+    //     }
+    // }
+    // descToggle.addEventListener("click", onHandler);
 
 </script>
 
@@ -461,8 +486,13 @@ console.log(box.classList.contains("active"));
     </section>
 </section>
 <script>
-    let sectionStartPoint = document.querySelector("#q9 .section>.list>.item")
-    sectionStartPoint.classList.add("selected");
+    const q9 = document.querySelector("#q9");
+    const selectedBtn = q9.querySelector(".section>.toolbar>.btn")
+    const q9List = q9.querySelector(".list")
+
+    selectedBtn.addEventListener("click", ()=>{
+        q9List.children[0].classList.add("selected");
+    })
 
 </script>
 
@@ -486,11 +516,28 @@ console.log(box.classList.contains("active"));
     <div class="card">
         <h3 class="title">제목</h3>
         <div class="body">
-            <button class="more">더보기</button>
+            <div class="more">
+                <button>더보기</button>
+            </div>
         </div>
     </div>
 </section>
 <script>
+    const moreBtns = q11.querySelectorAll(".card .more");
+    for (let btn of moreBtns) {
+        btn.addEventListener("click", (e)=>{
+            //event object : 이벤트에 대한 발생정보
+            //e.target : 이벤트가 발생한 타겟
+            //e.currentTarget : 이벤트를 정의한 타겟
+            //this(x)
+            // console.log(e.target);
+            // console.log(e.currentTarget);
+            let card = e.currentTarget.closest(".card");
+            console.log(card);
+            card.querySelector(".title").classList.toggle("open")
+        })
+    }
+
     let moreStartPoint = document.querySelector("#q11 .more")
     moreStartPoint = moreStartPoint.parentElement.parentElement.firstElementChild
     moreStartPoint.classList.add("open")
@@ -514,29 +561,67 @@ console.log(box.classList.contains("active"));
 <section id="q13">
     <h3>문제 13. data-* 읽고 쓰기</h3>
     <p class="task">지시: <code>#product</code>의 <code>data-stock</code> 값을 읽어 0이면 <strong>“(품절)”</strong>, 아니면 <strong>“(재고: n)”</strong>을 <code>.name</code> 뒤에 추가하라.</p>
-    <div id="product" data-id="A-100" data-stock="7">
+    <p>
+        <button id="stockCheckBtn">재고 확인</button>
+    </p>
+    <div class="product" data-id="A-100" data-stock="7">
         <span class="name">키보드</span>
+    </div>
+    <div class="product" data-id="A-177" data-stock="0">
+        <span class="name">모니터</span>
+    </div>
+    <div class="product" data-id="A-179" data-stock="20">
+        <span class="name">마우스</span>
     </div>
 </section>
 <script>
-    let readProduct = document.querySelector("#q13 #product")
-    console.log(readProduct.dataset.stock)
-    if (readProduct.dataset.stock === 0){
-        readProduct.firstElementChild.innerText+="(품절)"
-    }else readProduct.firstElementChild.innerText+=`(재고:${readProduct.dataset.stock})`
+    // let readProduct = document.querySelector("#q13 #product")
+    // console.log(readProduct.dataset.stock)
+    // if (readProduct.dataset.stock === 0){
+    //     readProduct.firstElementChild.innerText+="(품절)"
+    // }else readProduct.firstElementChild.innerText+=`(재고:${readProduct.dataset.stock})`
+    //
+    const product = document.querySelectorAll("#q13 .product");
+    const stockCheckBtn = document.querySelector("#stockCheckBtn");
+    const stockHandler = ()=> {
+        for (let p of product) {
+            let stock = p.dataset.stock;
+            let nameNode = p.querySelector(".name");
+            if (stock > 0) {
+                nameNode.innerText += ` (재고: ${stock})`
+            } else {
+                nameNode.classList.add("selected");
+                nameNode.innerText += `(품절)`
+            }
+        }
+    }
+    stockCheckBtn.addEventListener("click",stockHandler)
+
 </script>
 <section id="q14">
     <h3>문제 14. style 수정</h3>
     <p class="task">지시: <code>.panel</code> 내부 <code>.msg</code>의 글자색을 <strong>red</strong>, 글자 크기를 <strong>20px</strong>로 바꿔라.</p>
     <div class="panel">
         <p class="msg">알림</p>
+        <p class="">알림</p>
+        <p class="">알림</p>
+        <p class="msg">알림</p>
+        <p class="msg">알림</p>
+        <p class="">알림</p>
     </div>
 </section>
 <script>
-    let msgStyleChange = document.querySelector("#q14 .panel>.msg")
-    msgStyleChange.style.color = "red";
-    msgStyleChange.style.fontSize = "20px";
-
+    let msgStyleChange = document.querySelectorAll("#q14 .panel>.msg")
+    for (let m of msgStyleChange) {
+        // m.style.color = "red";
+        // m.style.fontSize = "20px";
+        // Object.assign(객체.필드,{})
+        let styleObj={
+            color:"red",
+            fontSize:"30px",
+        }
+        Object.assign(m.style, styleObj);
+    }
 </script>
 
 <section id="q15">
@@ -559,13 +644,11 @@ console.log(box.classList.contains("active"));
     </ul>
 </section>
 <script>
-    let circularNum = document.querySelector("#q16 .posts li:first-child")
+    const circularNum = document.querySelector("#q16 .posts")
     let current = circularNum
-    let cnt = 1
-    while (current){
-        current.textContent = cnt+". "+current.textContent;
-        current = current.nextElementSibling;
-        cnt++;
+    let n = 0
+    for (let li of circularNum.children) {
+        li.innerText  =`${++n}. ${li.innerText}`
     }
 </script>
 <section id="q17">
@@ -577,14 +660,16 @@ console.log(box.classList.contains("active"));
     </form>
 </section>
 <script>
-    let secondInput = document.querySelector("#q17 .row:nth-child(2)")
+    const secondInput = document.querySelector("#q17 .row:nth-child(2)")
     secondInput.firstChild.textContent+="(필수)";
-
+    // const emailInput = document.querySelector("[type = 'email']")
+    // console.log(emailInput)
+    // emailInput.previousSibling.textContent+="(필수)"
 </script>
 <section id="q18">
     <h3>문제 18. 특정 영역 한정 선택</h3>
     <p class="task">지시: <code>.board</code>의 <strong>.right</strong>를 시작점으로 그 내부의 모든 <code>.cell</code> 뒤에 <strong>“(R)”</strong>을 추가하라. (전역 <code>querySelectorAll</code> 금지)</p>
-    <section class="board">
+    <section class="board" style="display: flex">
         <ul class="left"><li class="cell">L1</li><li class="cell">L2</li></ul>
         <ul class="right"><li class="cell">R1</li><li class="cell">R2</li></ul>
     </section>
@@ -609,6 +694,7 @@ console.log(box.classList.contains("active"));
     <button class="activeBtn">active 옮기기 버튼</button>
 </section>
 <script>
+    const constFirstDot = document.querySelector("#q19 .dots>:first-child")
     let firstDot = document.querySelector("#q19 .dots>:first-child")
     let btn = document.querySelector("#q19 .activeBtn")
     const moveDot = function (){
@@ -618,7 +704,7 @@ console.log(box.classList.contains("active"));
             firstDot = firstDot.nextElementSibling;
             firstDot.classList.add("active");
             console.log(firstDot);
-        }else console.log("실행 안됨")
+        }else constFirstDot.classList.add("active");
     }
     btn.addEventListener("click", moveDot);
 
