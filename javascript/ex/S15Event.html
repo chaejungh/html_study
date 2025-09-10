@@ -268,10 +268,12 @@ document.querySelector(".grid").classList.toggle("theme-large");
 <script>
     let boxClickBackColorChange = document.querySelector("#p1 .box")
     const boxChange = function (){
-        boxClickBackColorChange.classList.toggle("selected")
-
+        this.classList.toggle("selected")
     }
-    boxClickBackColorChange.addEventListener("click", boxChange)
+    const boxColorChange = function (){
+        this.classList.toggle("bg-warning")
+    }
+    boxClickBackColorChange.addEventListener("click", boxColorChange)
     boxClickBackColorChange.addEventListener("mouseenter", boxChange)
     boxClickBackColorChange.addEventListener("mouseleave ", boxChange)
 </script>
@@ -282,16 +284,16 @@ document.querySelector(".grid").classList.toggle("theme-large");
 </section>
 <script>
     let boxDoubleClickStyleToggle = document.querySelector("#p2 .box");
-    const boxDoubleClick = function (){
-        boxDoubleClickStyleToggle.style.color='blue'
+    const boxDoubleClick = (e)=>{
+        e.currentTarget.style.color='blue'
     }
     const boxRightClickColorChange = function (e){
         e.preventDefault()
-        boxDoubleClickStyleToggle.style.color='red'
+        e.currentTarget.style.color='red'
     }
     boxDoubleClickStyleToggle.addEventListener("dblclick", boxDoubleClick)
     boxDoubleClickStyleToggle.addEventListener("contextmenu", boxRightClickColorChange)
-
+    //contextmenu 의 기본동작으로 메뉴가 뜬다
 </script>
 <section id="p3">
     <h3>문제 3. 마우스를 누르고 있는 동안 크기 확대, 떼면 원래 크기</h3>
@@ -302,14 +304,19 @@ document.querySelector(".grid").classList.toggle("theme-large");
     </p>
 </section>
 <script>
+    // let computedStyle = window.getComputedStyle(boxZoom)
+    // let w = computedStyle.width;
+    // let h = computedStyle.height;
+    // ==> let {width:w, height:h} = window.getComputedStyle(boxZoom);  구조분해할당
     const boxZoom = document.querySelector("#p3 .box");
     const resetBtn = document.querySelector("#resetBtn");
     let zoomTimer = null;
     const boxZoomIn = function (){
         clearInterval(zoomTimer);
         zoomTimer = setInterval(function (){
-            boxZoom.style.zoom++;
-        },1000);
+            let current = parseFloat(boxZoom.style.zoom) || 1;
+            boxZoom.style.zoom =current+0.1;
+        },100);
     }
     const boxZoomOut = function (){
         clearInterval(zoomTimer);
@@ -390,13 +397,9 @@ document.querySelector(".grid").classList.toggle("theme-large");
 </section>
 <script>
     const boxParent = document.querySelector("#p7 .wrap");
-    const boxParentCheckChildren = function (){
-        this.innerText="클릭 됨"
-    }
-
-    for (let box of boxParent.querySelectorAll(".box")){
-        box.addEventListener("click", boxParentCheckChildren);
-    }
+    boxParent.addEventListener("click", function (e){
+        e.target.classList.toggle("bg-warning");
+    })
 </script>
 <section id="p8">
     <h3>문제 8. 현재 테두리 두께를 확인해 1px이면 1em, 아니면 1px로 전환</h3>
@@ -496,7 +499,7 @@ document.querySelector(".grid").classList.toggle("theme-large");
 <section id="p14">
     <h3>문제 14. 부모 영역에 마우스를 올리면 모든 자식 둥글게, 클릭 시 개별 토글</h3>
     <p>구현 팁: 부모에 <code>mouseenter</code>/<code>mouseleave</code>로 자식 전체에 스타일 적용, <code>click</code>으로 개별 토글하세요.</p>
-    <div class="wrap">
+    <div class="wrap" style="border: 1px solid black;padding: 1em">
         <div class="box">X</div>
         <div class="box">Y</div>
         <div class="box">Z</div>
@@ -505,7 +508,7 @@ document.querySelector(".grid").classList.toggle("theme-large");
 <script>
     const boxParentWrap = document.querySelector("#p14 .wrap");
     const mouserParentHoverRound = function (){
-        for (let box of boxParentWrap.children){
+        for (let box of boxParentWrap.querySelectorAll(".box")){
             box.classList.toggle("rounded-5");
         }
     }
@@ -513,7 +516,8 @@ document.querySelector(".grid").classList.toggle("theme-large");
         this.classList.toggle("bg-danger");
     }
     boxParentWrap.addEventListener("mouseenter", mouserParentHoverRound);
-    for (let box of boxParentWrap.children){
+    boxParentWrap.addEventListener("mouseleave", mouserParentHoverRound);
+    for (let box of boxParentWrap.querySelectorAll(".box")){
         box.addEventListener("click", clickChildrenToggle);
     }
 </script>
