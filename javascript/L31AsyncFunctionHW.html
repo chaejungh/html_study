@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>비동기 통신 해보기</title>
+</head>
+<style>
+    .item { padding: 8px 10px; border-radius: 6px; background: #f2f6ff; margin: 6px 0; display: flex; justify-content: space-between; align-items: center; }
+    .meta { font-size: 0.9em; color: #555; }
+    .list { border: 2px solid #333; border-radius: 8px; padding: 12px; margin-top: 12px; }
+    .d-none{
+        display: none;
+    }
+</style>
+<body>
+    <h1>비동기 통신 해보기</h1>
+    <button id="dataBtn">데이터 불러오기</button>
+    <pre id="response"></pre>
+    <section class="list" id="scheduleList">
+        <div id="scheduleEx" class="d-none">
+            <div class="item">
+                <div>
+                    <strong class="st"></strong>
+                    <div class="meta d"></div>
+                </div>
+                <button id="removeBtn">일정 삭제</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const scheduleList = document.querySelector('#scheduleList');//일정리스트
+        const dataBtn = document.querySelector('#dataBtn')//데이터 불러오기버튼
+
+
+        dataBtn.addEventListener ("click",function () {
+            const xhr = new XMLHttpRequest();
+            let list = undefined
+            xhr.open("GET", "ToDoList.json")
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    list = JSON.parse(xhr.responseText);
+                    for (let li of list) {
+
+                        let title = li.title
+                        let place = li.place
+                        let time = li.time+" "
+                        scheduleList.append(itemCopy(title, time, place))
+                    }
+
+                }else {
+                    console.error("에러발생: " + xhr.statusText);
+                }
+            }
+            xhr.send();
+        });
+
+
+
+
+
+
+
+
+
+        const itemCopy = function (title,time,place){
+            let clone =scheduleEx.cloneNode(true)
+            clone.removeAttribute('id');
+            clone.classList.remove('d-none');
+            console.log(clone)
+            let st = clone.querySelector(".st")
+            let d = clone.querySelector(".d")
+            let removeBtn = clone.querySelector("#removeBtn")
+            st.append(title)
+            d.append(time)
+            d.append(place)
+            removeBtn.addEventListener("click", (e)=>{
+                // clone.remove()
+                e.target.closest(".item").remove();
+            })
+            return clone;
+        }
+
+    </script>
+
+</body>
+</html>

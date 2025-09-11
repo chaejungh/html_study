@@ -206,15 +206,15 @@
     <h1>일정 앱 과제 (노드 추가/삽입 중심)</h1>
 
     <!-- 입력 폼 -->
-    <form id="scheduleForm" class="toolbar" onsubmit="return false;">
-        <input id="titleInput" type="text"  placeholder="제목" />
-        <input id="dateInput" type="datetime-local" />
-        <input id="placeInput" type="text" placeholder="장소(옵션)" />
+    <form id="scheduleForm" class="toolbar">
+        <input name="titleInput" id="" type="text"  placeholder="제목" />
+        <input name="dateInput" type="datetime-local" />
+        <input name="placeInput" type="text" placeholder="장소(옵션)" />
         <p>
-            <button id="addAppend">1.append로 추가</button>
-            <button id="addPrepend">2.prepend로 추가</button>
-            <button id="addBefore">3.before로 추가</button>
-            <button id="addAfter">4.after로 추가</button>
+            <button id="addAppend" type="button">1.append로 추가</button>
+            <button id="addPrepend" type="button">2.prepend로 추가</button>
+            <button id="addBefore" type="button">3.before로 추가</button>
+            <button id="addAfter" type="button">4.after로 추가</button>
         </p>
     </form>
 
@@ -285,45 +285,126 @@
         // 여기에 각 문제의 해답 코드를 작성하세요.
         // 예시) document.querySelector('#addApend').addEventListener('click', () => { ... })
         const scheduleEx = document.querySelector('#scheduleEx');
-        const scheduleList = document.querySelector('#scheduleList');
-        const scheduleForm = document.forms['scheduleForm']
+        const scheduleList = document.querySelector('#scheduleList');//일정리스트
+        const scheduleForm = document.forms['scheduleForm']//스케줄 등록폼
 
-        const addAppendHandler = document.querySelector('#addAppend')
+        const addAppend = document.querySelector('#addAppend')//스케줄을 마지막에 등록 버튼
+        const addPrepend = document.querySelector('#addPrepend')//맨앞 등록버튼
+        const addBefore = document.querySelector('#addBefore')//anchor기준으로 앞 등록버튼
+        const addAfter = document.querySelector('#addAfter')//anchor기준으로 뒤 등록버튼
 
-        const titleInput = scheduleForm.querySelector('#titleInput')
-        const dateInput = scheduleForm.querySelector('#dateInput')
-        const placeInput = scheduleForm.querySelector('#placeInput')
-        const btnRemove = scheduleForm.querySelector('#btnRemove')
+        // const titleInput = scheduleForm.querySelector('[name="titleInput"]')
+        const titleInput = scheduleForm.titleInput;
+        const dateInput = scheduleForm.dateInput
+        const placeInput = scheduleForm.placeInput
+        const btnRemove = document.querySelectorAll('#scheduleList .btnRemove')
 
-        const addAppend = (e) => {
-            e.preventDefault();
-
+        const itemCopy = function (title,time,place){
             let clone =scheduleEx.cloneNode(true)
             clone.removeAttribute('id')
             clone.classList.remove('d-none')
-
-            let strong = titleInput.value
             let st = clone.querySelector(".st")
-            st.append(strong)
-
-            let dDate = dateInput.value
             let d = clone.querySelector(".d")
-            d.append(dDate)
-
-            let div = placeInput.value
-            d.append(div)
-
-            // let button = btnRemove.value
-            // let b = clone.querySelector(".b")
-            // b.append(button)
-
-            scheduleList.append(clone)
-
-
+            let removeBtn = clone.querySelector(".b")
+            st.append(title)
+            d.append(time)
+            d.append(place)
+            removeBtn.addEventListener("click", (e)=>{
+                // clone.remove()
+                e.target.closest(".item").remove();
+            })
+            return clone;
         }
-        addAppendHandler.addEventListener('click', addAppend)
+
+        addAppend.addEventListener ("click",function () {
+            let title = titleInput.value
+            let time = dateInput.value.replace("T"," ")
+            let place = placeInput.value
+            scheduleList.append(itemCopy(title,time,place))
+        });
+        addPrepend.addEventListener ("click",function () {
+            let title = titleInput.value
+            let time = dateInput.value.replace("T"," ")
+            let place = placeInput.value
+            scheduleList.prepend(itemCopy(title,time,place))
+        });
+        addBefore.addEventListener('click',function () {
+            let anchorItem = document.querySelector('#anchorItem');
+            let title = titleInput.value
+            let time = dateInput.value.replace("T"," ")
+            let place = placeInput.value
+            anchorItem.before(itemCopy(title,time,place))
+        });
+        addAfter.addEventListener('click',function () {
+            let anchorItem = document.querySelector('#anchorItem');
+            let title = titleInput.value
+            let time = dateInput.value.replace("T"," ")
+            let place = placeInput.value
+            anchorItem.after(itemCopy(title,time,place))
+        });
 
 
+
+        //
+        // scheduleForm.addEventListener('submit', function (e){
+        //     e.preventDefault()
+        //     // scheduleForm==e.target(e.currentTarget)==this
+        //     let title = this.titleInput.value
+        //     let date = this.dateInput.value.replace("T"," ")
+        //     let place = this.placeInput.value
+        //     console.log(title,date,place)
+        //     ///null,:,Nan => false
+        //     if (!(title && date && place)){
+        //         alert("일정, 날짜, 장소 모두 입력해야합니다.")
+        //         return;//함수종료
+        //     }
+        //     //1.html 문자열
+        //     let html=`
+        // <div class="item">
+        //     <div>
+        //         <strong>${title}</strong>
+        //         <div class="meta">${date} · ${place}</div>
+        //     </div>
+        //     <button class="btnRemove">삭제</button>
+        // </div>`
+        //     scheduleList.insertAdjacentHTML("beforeend", html)
+        // })
+        // addPrepend.addEventListener('click', function (e){
+        //     //button click : e,target === this ===addPrepend
+        //     // e.target.form : button을 포함하는 폼
+        //     let title = e.target.form.titleInput.value
+        //     let date = e.target.form.dateInput.value.replace("T"," ")
+        //     let place = e.target.form.placeInput.value
+        //     let divItem = createItemNode(title, date, place)
+        //     scheduleList.prepend(divItem)
+        //
+        // });
+        // function createItemNode(title,date,place){
+        //     let divItem = document.createElement("div");
+        //     divItem.className="item"
+        //     let div = document.createElement("div");
+        //     let buttonRemove = document.createElement("button");
+        //     buttonRemove.className="btnRemove"
+        //     buttonRemove.append("삭제")
+        //     divItem.append(div,buttonRemove)
+        //     let strong = document.createElement("strong");
+        //     let divMeta = document.createElement("div");
+        //     divMeta.className="meta";
+        //     strong.append(title)
+        //     divMeta.append(`${date} · ${place}`)
+        //     div.append(strong,divMeta)
+        //     return divItem
+        // }
+        // addBefore.addEventListener('click', function (e){
+        //     let anchorItem = document.querySelector('#anchorItem');
+        //     let title = this.form.titleInput.value
+        //     let date = this.form.dateInput.value.replace("T"," ")
+        //     let place = this.form.placeInput.value
+        //     let divItem = createItemNode(title, date, place)
+        //     anchorItem.after(divItem)
+        //     scheduleList.before(divItem)
+        //
+        // })
 
     </script>
 </div>

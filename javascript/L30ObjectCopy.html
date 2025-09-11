@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>객체복사</title>
+</head>
+<body>
+    <h1 id="title">객체복사</h1>
+    <script>
+        const obj = {
+            a:10,
+            b:20,
+            c:{
+                name:"cjh",
+                age:23
+            }
+        }
+        const objCopy={...obj}///객체 생성과 동시에 복사
+        console.log(objCopy)
+        console.log(obj)
+        console.log(objCopy===obj)
+        //false: 복제되어 주소가 다름
+        console.log(objCopy.c ===obj.c )
+        //true : 복제가 안되어서 주소가 같음
+        obj.c.name="두지형"
+
+
+        Object.assign(obj,objCopy)
+        console.log(objCopy.c.age)
+        // title.style.background="red"
+        Object.assign(title.style,{
+            color:'red',
+            textDecoration:'underline'
+        })
+    </script>
+</body>
+</html>
