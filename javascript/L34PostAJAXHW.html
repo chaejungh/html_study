@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="/silseub/src/bootstrap-5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <title>과제 비동기로 유저정보,장바구니 불러오기</title>
+</head>
+<style>
+    .d-none{
+        display: none;
+    }
+    b{text-align: left}
+    .item { width: 100%; padding: 8px 10px; border-radius: 6px; background: #f2f6ff; margin: 6px auto;display: flex; flex-direction: column;  justify-content: space-between;  }
+    .age{font-size: 17px}
+    div{text-align: center}
+    body{
+        text-align: center;
+    }
+    #users{
+
+    }
+</style>
+<body>
+    <h1>과제 : 비동기로 유저정보,장바구니 불러오기</h1>
+    <p>
+        <button id="loadButton">불러오기</button>
+    </p>
+    <hr>
+    <div id="userEx" class="user d-none item">
+        <h4>
+            <b class="id"></b> .
+            <span class="name font-size-large"></span>
+            (<span class="age"></span>)
+        </h4>
+        <div class="email"></div>
+        <div class="phone"></div>
+        <p>
+            <button class="cartLoadBtn">장바구니 불러오기</button>
+        </p>
+        <hr>
+        <div class="carts"></div>
+    </div>
+    <div id="userCartEx" class="cart d-none item">
+        <p>
+            <img class="thumbnail" style="width: 50px" src="" alt="">
+            <b class="title"></b>
+            $<span class="price"></span>,
+            quantity: <span class="quantity"></span>
+        </p>
+    </div>
+    <div id="users"></div>
+    <div id="carts"></div>
+    <script>
+        const loadButton = document.getElementById("loadButton");
+        const userEx = document.querySelector("#userEx");
+        const usersNode= document.querySelector("#users");
+
+        const userCartEx = document.querySelector("#userCartEx");
+        const cartNode = document.getElementById("carts");
+
+        const cloneUser = (userInfo) => {
+            const userClone = userEx.cloneNode(true);
+            userClone.removeAttribute("id");
+            userClone.classList.remove("d-none");
+            let id = userClone.querySelector(".id");
+            let name = userClone.querySelector(".name");
+            let age = userClone.querySelector(".age");
+            let email = userClone.querySelector(".email");
+            let phone = userClone.querySelector(".phone");
+            let carts = userClone.querySelector(".carts");
+            let cartLoadBtn = userClone.querySelector(".cartLoadBtn");
+            id.append(userInfo.id);
+            name.append(userInfo.firstName);
+            name.append(userInfo.lastName);
+            age.append(userInfo.age);
+            email.append(userInfo.email);
+            phone.append(userInfo.phone);
+            cartLoadBtn.addEventListener("click", ()=>{
+                loadCarts(userInfo.id,carts);
+            })
+
+            return userClone;
+        }
+        const loadUser=()=> {
+            let url = "https://dummyjson.com/users";
+            const req = new XMLHttpRequest();
+            req.open("GET", url, true);
+            req.send();
+            req.onload=()=>{
+                let status = req.status;
+                if (status === 200) {
+                    let userText = req.responseText;
+                    let userJson = JSON.parse(userText);
+
+                    for (userInfo of userJson.users){
+                        const userNode = cloneUser(userInfo)
+                        usersNode.append(userNode);
+
+                    }
+                }
+            }
+        }
+        loadButton.addEventListener("click",loadUser)
+
+
+
+
+        const cloneUserCarts = (userCarts) => {
+            const userClone = userCartEx.cloneNode(true);
+            userClone.removeAttribute("id");
+            userClone.classList.remove("d-none");
+            let thumbnail = userClone.querySelector(".thumbnail");
+            let title = userClone.querySelector(".title");
+            let price = userClone.querySelector(".price");
+            let quantity = userClone.querySelector(".quantity");
+            thumbnail.src=(userCarts.thumbnail);
+            title.append(userCarts.title);
+            price.append(userCarts.price);
+            quantity.append(userCarts.quantity);
+
+            return userClone;
+        }
+
+        const loadCarts=(userId,cartsNode)=>{
+            let url = "https://dummyjson.com/carts/"+userId;
+            const req = new XMLHttpRequest();
+            req.open("GET", url, true);
+            req.send();
+            req.onload=()=>{
+                let status = req.status;
+                if (status === 200) {
+                    let carts = JSON.parse(req.responseText);
+                    console.log(carts.products);
+                    for (let userCarts of carts.products){
+                        const cart = cloneUserCarts(userCarts)
+                        cartsNode.append(cart)
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
