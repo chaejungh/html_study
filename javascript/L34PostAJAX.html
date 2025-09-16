@@ -80,11 +80,10 @@
             if(req.status===200){ //"200"==200, 200===200
                 const comments=JSON.parse(req.responseText);
                 let html="";
-                for(let comment of comments){
-                    const li = commentNode(comment)
-                    commentsUl.append(li);
-                }
-
+                const commentMap = comments.map(comment=>{
+                    return commentNode(comment)
+                })
+                commentsUl.append(...commentMap)
             }
         }
     }
@@ -103,11 +102,17 @@
                 //parse("{\"a\":20}" ) 문자열=>객체 (파싱) {a:20}
                 // console.log(posts);
                 let html="";
-                for(let post of posts){
-                    const postNode = clonePostNode(post)
-                    console.log(postNode);
-                    postsUl.append(postNode);
-                }
+                // for(let post of posts){
+                //     const postNode = clonePostNode(post)
+                //     console.log(postNode);
+                //     postsUl.append(postNode);
+                // }
+                const clonePostArr = posts.map((post)=>{
+                    return clonePostNode(post)
+                })
+                // console.log(posts)
+                // console.log(clonePostArr)
+                postsUl.append(...clonePostArr);
             }
         }
     }

@@ -130,7 +130,7 @@
                 let status = req.status;
                 if (status === 200) {
                     let carts = JSON.parse(req.responseText);
-                    console.log(carts.products);
+                    console.log(carts);
                     for (let userCarts of carts.products){
                         const cart = cloneUserCarts(userCarts)
                         cartsNode.append(cart)

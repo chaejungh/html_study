@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>DummyJSON으로 AJAX쇼핑몰 구현</title>
+    <link rel="stylesheet" href="/silseub/src/bootstrap-5.3.7/dist/css/bootstrap.css">
+    <script defer src="/silseub/src/bootstrap-5.3.7/dist/js/bootstrap.bundle.js"></script>
+<!-- defer: 도큐먼트가 모두 로드되고 script 다운   -->
+</head>
+<style>
+    body{
+        margin-right: 10%;
+        margin-left: 10%;
+        border: 1px solid black;
+    }
+    .item { width: 100%; padding: 8px 10px; border-radius: 6px; background: #f2f6ff; margin: 6px auto;display: flex; flex-direction: column;  justify-content: space-between;  }
+    .d-none { display: none;}
+</style>
+<body>
+
+    <h1 style="text-align: center">C-Mart</h1>
+    <div>
+        <b id="hiUser"></b>
+        <button id="loadButton">장바구니 불러오기</button>
+        <button id="receiptBtn" class="d-none">영수증 출력</button>
+    </div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form id="searchForm" class="d-flex" role="search">
+                    <input id="userIdInput" class="form-control me-2" type="search" placeholder="UserId" aria-label="Search" />
+                    <button class="searchBtn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div id="userCartEx" class="cart d-none item">
+        <p>
+            <img class="thumbnail" style="width: 50px" src="" alt="">
+            <b class="title"></b>
+            <span class="price">$</span>
+            <span class="quantity">quantity: </span>
+        </p>
+    </div>
+    <div id="carts"></div>
+    <style>
+        td{
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th{
+            border: 1px solid black;
+        }
+    </style>
+    <table class="d-none">
+        <tr id="userCartReceipt">
+            <td class="printId"></td>
+            <td class="printTitle"></td>
+            <td class="printPrice"></td>
+            <td class="printQuantity"></td>
+            <td class="printTotalPrice"></td>
+        </tr>
+    </table>
+    <table id="userCartTable" border="1" class="d-none">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>price($)</th>
+            <th>quantity</th>
+            <th>total($)</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot id="tFoot">
+            <tr>
+                <td>X</td>
+                <td>X</td>
+                <td>X</td>
+                <td id="totalQuantity"></td>
+                <td id="totalPrice"></td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+<script>
+    const userIdInput = document.getElementById('userIdInput');
+    const searchForm = document.getElementById('searchForm');
+    const loadButton = document.getElementById('loadButton');//유저의 장바구니 불러오기 버튼
+    const userCartEx = document.getElementById('userCartEx');//clone할 유저의 장바구니
+    const cartNode = document.getElementById("carts");
+    const userCartReceipt = document.getElementById('userCartReceipt');
+    const receiptBtn = document.getElementById('receiptBtn');
+    const userCartTable = document.getElementById('userCartTable');
+    const userCartTableBody = userCartTable.querySelector('tbody');
+    const totalQuantity = document.getElementById('totalQuantity');
+    const totalPrice = document.getElementById('totalPrice');
+
+    searchForm.addEventListener('submit', (e) => {//userId값 입력한
+        e.preventDefault();
+
+        let value = userIdInput.value;//입력한 userId 값
+        if (!(value === "")) {
+            hiUser.innerText = value+"번 유저님 안녕하세요";
+        }
+    })
+
+
+
+
+
+    const mul=(price,quantity)=>{
+        return price * quantity;
+    }
+    const calc=(value)=>{
+        value = Number.parseInt(value)
+        value+=value;
+        return value;
+    }
+
+    const cloneUserCart = (pro) => {
+        //console.log(pro)
+        const cartClone = userCartEx.cloneNode(true)
+        cartClone.removeAttribute("id");
+        cartClone.classList.remove("d-none");
+        receiptBtn.classList.remove("d-none");
+        let thumbnail = cartClone.querySelector(".thumbnail");
+        let title = cartClone.querySelector(".title");
+        let price = cartClone.querySelector(".price");
+        let quantity = cartClone.querySelector(".quantity");
+        thumbnail.src=(pro.thumbnail);
+        title.append(pro.title);
+        price.append(pro.price);
+        quantity.append(pro.quantity);
+        receiptBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            console.log("??")
+            const receiptClone = userCartReceipt.cloneNode(true)
+            receiptClone.removeAttribute("id");
+            receiptClone.classList.remove("d-none");
+            userCartTable.classList.remove("d-none");
+            let printId = receiptClone.querySelector(".printId");
+            let printTitle = receiptClone.querySelector(".printTitle");
+            let printPrice = receiptClone.querySelector(".printPrice");
+            let printQuantity = receiptClone.querySelector(".printQuantity");
+            let printTotalPrice = receiptClone.querySelector(".printTotalPrice");
+            printId.append(pro.id);
+            printTitle.append(pro.title);
+            printPrice.append(pro.price);
+            printQuantity.append(pro.quantity)
+            printTotalPrice.append(mul(pro.price,pro.quantity).toFixed(2));
+            userCartTableBody.append(receiptClone);
+        })
+        return cartClone;
+    }
+    const loadUser=()=> {
+        let sumQ=undefined;
+        let sumTotalPrice=undefined;
+        let url = "https://dummyjson.com/carts/user/"+userIdInput.value;
+        const req = new XMLHttpRequest();
+        req.open("GET", url, true);
+        req.send();
+        req.onload=()=>{
+            let status = req.status;
+            if (status === 200) {
+                let userCart = JSON.parse(req.responseText);
+                // console.log(userCart.products)
+                console.log(userCart);
+                const totalObj={
+                    quantity:0,
+                    price:0,
+                }
+                for (let cart of userCart.carts) {
+                    let product = cart.products;
+                    sumTotalPrice = product.reduce((init,b)=>init+b.price,1);
+                    sumQ = product.reduce((a,b)=>a+b.quantity,0);
+                    totalObj.quantity+=sumQ;
+                    totalObj.price+=sumTotalPrice;
+                    for (let pro of product) {
+                        const productPrint = cloneUserCart(pro)
+                        cartNode.append(productPrint);//복제한 div태그 cartNode에 붙혀서 출력하기
+                    }
+                }
+                totalPrice.append(totalObj.price.toFixed(2))
+                totalQuantity.append(totalObj.quantity)
+            }else {
+                console.log("error");
+            }
+        }
+    }
+    loadButton.addEventListener("click",loadUser)
+
+
+
+</script>
+</html>
