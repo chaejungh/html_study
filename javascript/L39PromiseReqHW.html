@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>비동기 통신 XMLHttpRequest를 Promise로 동기화 해보기</title>
+</head>
+<body>
+    <h1>비동기 통신 XMLHttpRequest를 Promise로 동기화 해보기</h1>
+    <hr>
+    <h2>emmaj 게시글 호출</h2>
+    <p>
+        <button id="loadEmmajPostsBtn">emmaj의 게시글 출력</button>
+    </p>
+    <div id="loadEmmajPosts"></div>
+    <script>
+        const loadEmmajPostsBtn = document.getElementById('loadEmmajPostsBtn');
+        const loadEmmajPosts = document.getElementById('loadEmmajPosts');
+        const loadEmmaj=()=>{
+            let userId = null;
+            let url =  `https://dummyjson.com/user/login`
+            const userObj = {
+                "username": "emmaj",
+                "password": "emmajpass",
+            }
+            const req = new XMLHttpRequest();
+            req.open("POST", url, true);
+            req.setRequestHeader("Content-type", "application/json");
+            req.send(JSON.stringify(userObj));
+
+            req.onload=()=>{
+                if (req.status !== 200)return
+                const loginObj = JSON.parse(req.responseText);
+                userId = loginObj.id;
+                console.log(userId);
+                const cartsReq = new XMLHttpRequest();
+                let cartsUrl = "https://dummyjson.com/posts/user/"+userId
+                cartsReq.open("GET", cartsUrl, true);
+                cartsReq.send();
+                cartsReq.onload=()=>{
+                    if (cartsReq.status !== 200)return;
+                    loadEmmajPosts.innerText = cartsReq.responseText;
+                }
+
+            }
+        }
+        loadEmmajPostsBtn.addEventListener('click',loadEmmaj)
+
+    </script>
+    <hr>
+    <h2>프라미스로 user.id 조회후 장바구니 조회</h2>
+    <p>
+        <button id="stellahCartsBtn">stellah 장바구니 호출</button>
+    </p>
+<div id="loadStellahCarts"></div>
+<script>
+    const loadStellahCarts = document.getElementById('loadStellahCarts');
+    const stellahCartsBtn = document.getElementById('stellahCartsBtn');
+    const loadStellah=()=>{
+        new Promise((resolve)=>{
+            const req = new XMLHttpRequest();
+            let url = "https://dummyjson.com/user/login"
+            const userObj = {
+                "username": "stellah",
+                "password": "stellahpass",
+            }
+            req.open("POST", url, true);
+            req.setRequestHeader("Content-type", "application/json");
+            req.send(JSON.stringify(userObj));
+            req.onload=()=>{
+                if (req.status !== 200)return;
+                const loginObj = JSON.parse(req.responseText);
+                resolve(loginObj.id);
+            }
+        }).then((id)=>{
+            console.log(id)
+            let url = "https://dummyjson.com/carts/user/"+id
+            const req = new XMLHttpRequest();
+            req.open("GET", url, true);
+            req.send();
+            req.onload=()=>{
+                if (req.status !== 200)return;
+                loadStellahCarts.innerText = req.responseText;
+            }
+
+        })
+    }
+
+    stellahCartsBtn.addEventListener("click",loadStellah)
+</script>
+
+    <hr>
+    <h2>async 함수로 emmaj 게시글 호출</h2>
+    <p>
+        <button id="loadAsyncEmmajPostsBtn">emmaj의 게시글 출력</button>
+    </p>
+    <div id="loadAsyncEmmajPosts"></div>
+    <script>
+        const loadAsyncEmmajPostsBtn = document.getElementById('loadAsyncEmmajPostsBtn');
+        const loadAsyncEmmajPosts = document.getElementById('loadAsyncEmmajPosts');
+        const loadAsyncEmmaj = async ()=>{
+            let url = "https://dummyjson.com/user/login"
+            const userObj = {
+                "username": "emmaj",
+                "password": "emmajpass",
+            }
+            let req = await fetch(url, {
+                method: "POST",
+                headers: {"Content-type": "application/json"},
+                body: JSON.stringify(userObj)
+            })
+            let data = await req.json();
+
+            url = "https://dummyjson.com/posts/user/"+data.id;
+            req = await fetch(url)
+            data = await req.json();
+            loadAsyncEmmajPosts.innerText = JSON.stringify(data)
+        }
+        loadAsyncEmmajPostsBtn.addEventListener('click',loadAsyncEmmaj)
+    </script>
+</body>
+</html>
