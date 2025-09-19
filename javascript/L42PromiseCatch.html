@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promise 객체에서 예외 위임</title>
+</head>
+<body>
+    <h1>Promise 객체에서 예외 위임</h1>
+    <script>
+
+        // let e = new Error();//그냥 에러객체만 생성
+        // throw e;//throw 해야 에러가 발생함
+        let a=10;
+        let b = "이십";
+
+        new Promise((resolve, reject) => {
+            let sum = (+a)+(+b);// NaN가 아니면 resolve, NaN면 reject
+            //isNaN(NaN일수도 있는 데이터 검사)
+            //isNaN("십") 검사 => true
+
+            //Number.isNaN(NaN) 검사
+            //Number.isNaN("십") 검사 => false
+            if (Number.isNaN(sum)){//a나 b 둘중하나가 NaN
+                // reject("a나 b 둘중하나가 NaN")
+                // Error객체로도 catch가능 reject 굳이 안써도 됨
+                throw new Error("new Error : a나 b중 둘중하나가 NaN")
+            }else {
+                resolve(sum);
+            }
+        })//resolve(sum);는 .then으로 받고
+        //    reject("a나 b 둘중하나가 NaN")는  .catch로 받는다
+            .then((sum)=>{
+                console.log("a+b=",sum);
+            })
+            .catch((err)=>{
+                console.log(err.message);
+            })
+
+
+        //async 함수에서 promise의 예외 처리
+        const run = async (n1,n2) => {
+            try{
+                let result = await new Promise((resolve, reject) => {
+                    let sum=(+n1)+(+n2);
+                    if (Number.isNaN(sum)){
+                        // reject(new Error("reject n1,n2 둘중 NaN가 있습니다."))
+                        throw(new Error("throw n1,n2 둘중 NaN가 있습니다."))
+                        //new Error로 같이 보내야 error메세지가 뜨고 없다면
+                        //문자열만 출력됨  // 문제있음:어디서 발생한지 모름
+                    }else {
+                        resolve(sum);
+                    }
+                });
+                console.log("result:",result);
+            }catch(err){
+                console.log(err)
+            }
+        }
+        // async function run(){}
+        run(3,5)
+        run("6",5)
+        run("육",5)
+
+
+
+
+
+
+    </script>
+</body>
+</html>

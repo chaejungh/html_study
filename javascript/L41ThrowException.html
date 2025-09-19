@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>예외 위임(발생) throw를 사용하자</title>
+</head>
+<body>
+    <h1>예외 위임(발생) throw를 사용하자</h1>
+    <script>
+        const sum=(a,b)=>{
+            if (!isNaN(a) && !isNaN(b)){
+                return Number(a)+Number(b);
+            }
+            throw new Error("매개변수는 수만 가능합니다.")
+        }
+        console.log(sum(10,20))
+        console.log(sum("10",20))
+        try{
+            console.log(sum("십",20))
+        }catch(err){
+            console.log(err);
+        }
+    </script>
+</body>
+</html>

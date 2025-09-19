@@ -175,40 +175,42 @@
         })
         return cartClone;
     }
-    const loadUser=()=> {
+    const loadUser= async ()=> {
         let sumQ=undefined;
         let sumTotalPrice=undefined;
         let url = "https://dummyjson.com/carts/user/"+userIdInput.value;
-        const req = new XMLHttpRequest();
-        req.open("GET", url, true);
-        req.send();
-        req.onload=()=>{
-            let status = req.status;
-            if (status === 200) {
-                let userCart = JSON.parse(req.responseText);
-                // console.log(userCart.products)
-                console.log(userCart);
-                const totalObj={
-                    quantity:0,
-                    price:0,
-                }
-                for (let cart of userCart.carts) {
-                    let product = cart.products;
-                    sumTotalPrice = product.reduce((init,b)=>init+b.price,1);
-                    sumQ = product.reduce((a,b)=>a+b.quantity,0);
-                    totalObj.quantity+=sumQ;
-                    totalObj.price+=sumTotalPrice;
-                    for (let pro of product) {
-                        const productPrint = cloneUserCart(pro)
-                        cartNode.append(productPrint);//복제한 div태그 cartNode에 붙혀서 출력하기
-                    }
-                }
-                totalPrice.append(totalObj.price.toFixed(2))
-                totalQuantity.append(totalObj.quantity)
-            }else {
-                console.log("error");
+
+        try{
+            const req = await fetch(url);
+            if (!req.ok) {
+                throw new Error("서버 응답 오류"+req.status)
             }
+            let userCart = await req.json();
+
+            const totalObj={
+                quantity:0,
+                price:0,
+            }
+            for (let cart of userCart.carts) {
+                let product = cart.products;
+
+                sumTotalPrice = product.reduce((init,b)=>init+b.price,1);
+                sumQ = product.reduce((a,b)=>a+b.quantity,0);
+
+                totalObj.quantity+=sumQ;
+                totalObj.price+=sumTotalPrice;
+
+                for (let pro of product) {
+                    const productPrint = cloneUserCart(pro)
+                    cartNode.append(productPrint);//복제한 div태그 cartNode에 붙혀서 출력하기
+                }
+            }
+            totalPrice.append(totalObj.price.toFixed(2))
+            totalQuantity.append(totalObj.quantity)
+        }catch (e) {
+            console.error("데이터 불러오기 실패",e);
         }
+
     }
     loadButton.addEventListener("click",loadUser)
 
