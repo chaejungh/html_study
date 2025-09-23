@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourcePerFileMappings">
-    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/9766caf7-7266-48d1-a52e-9b5305a56429/console.sql" value="9766caf7-7266-48d1-a52e-9b5305a56429" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/1778346a-2e59-4107-9f37-6c1bfeec54c4/console.sql" value="1778346a-2e59-4107-9f37-6c1bfeec54c4" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/6a0a13b2-24cb-4f22-a49b-5c328a71bc15/console.sql" value="6a0a13b2-24cb-4f22-a49b-5c328a71bc15" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/73e93abf-9151-4ebd-a68a-18b29f7e4761/console.sql" value="73e93abf-9151-4ebd-a68a-18b29f7e4761" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/d2aef9d0-a858-48bc-8076-6b8c20a23eee/console.sql" value="d2aef9d0-a858-48bc-8076-6b8c20a23eee" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/d2aef9d0-a858-48bc-8076-6b8c20a23eee/console_1.sql" value="d2aef9d0-a858-48bc-8076-6b8c20a23eee" />
+    <file url="file://$PROJECT_DIR$/oracle21c/ex/L01CreateTable.sql" value="d2aef9d0-a858-48bc-8076-6b8c20a23eee" />
+    <file url="file://$PROJECT_DIR$/oracle21c/ex/L02DML.sql" value="1778346a-2e59-4107-9f37-6c1bfeec54c4" />
+    <file url="file://$PROJECT_DIR$/oracle21c/ex/L02LeagueHW.sql" value="73e93abf-9151-4ebd-a68a-18b29f7e4761" />
   </component>
 </project>
