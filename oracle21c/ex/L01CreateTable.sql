@@ -24,4 +24,3 @@ create user table_user2 identified by "1234"--system의 하위계정으로 table
 
 grant connect, resource to table_user2;
 
-create table
