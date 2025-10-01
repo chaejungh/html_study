@@ -13,3 +13,4 @@ from emp_dept;
 drop view emp_2000_sal;
 --Grant Revoke DCL
 --Select(DQL),Insert,Delete,Update  DML
+
